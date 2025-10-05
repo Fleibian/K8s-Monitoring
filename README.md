@@ -1,10 +1,10 @@
 # Kubernetes Cluster Einrichtung mit Kind, Traefik und Prometheus
 
 Alle Dateien zur Einrichtung liegen unter:  
-`E:\kind\PROD Installation`
+`E:\K8s-Monitoring`
 
 Alle Commands werden aus dem Ordner  
-`E:\kind\PROD Installation` ausgeführt.
+`E:\K8s-Monitoring` ausgeführt.
 
 ---
 
