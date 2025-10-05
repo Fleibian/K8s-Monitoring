@@ -9,12 +9,12 @@ metadata:
   # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
   namespace: dotnet-app
   labels:
-    monitoring: prometheus-applications
+    release: prometheus-applications
     prometheus-shard: prometheus-00
 spec:
-  # namespaceSelector:
-  #   matchNames:
-  #   - dotnet-app
+  namespaceSelector:
+    matchNames:
+    - dotnet-app
   selector:
     matchLabels:
       app: dotnet-application
@@ -28,7 +28,7 @@ metadata:
   # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
   namespace: go-app
   labels:
-    monitoring: prometheus-applications
+    release: prometheus-applications
     prometheus-shard: prometheus-00
 spec:
   namespaceSelector:
@@ -47,7 +47,7 @@ metadata:
   # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
   namespace: nodejs-app
   labels:
-    monitoring: prometheus-applications
+    release: prometheus-applications
     prometheus-shard: prometheus-01
 spec:
   namespaceSelector:
@@ -66,7 +66,7 @@ metadata:
   # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
   namespace: python-app
   labels:
-    monitoring: prometheus-applications
+    release: prometheus-applications
     prometheus-shard: prometheus-01
 spec:
   namespaceSelector:
