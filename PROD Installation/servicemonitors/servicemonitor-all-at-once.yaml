@@ -1,0 +1,111 @@
+# MODIFIZIERTE DATEI AUS DEM REPO https://github.com/marcel-dempers/docker-development-youtube-series/blob/master/monitoring/prometheus/kubernetes/prometheus-operator/servicemonitors.yaml
+# Um Namespace zu berücksichtigen, wurde namespaceSelector hinzugefügt
+
+# --------------------------------------------------- APPLICATION ----------------------------------------------------
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dotnet-application
+  # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
+  namespace: dotnet-app
+  labels:
+    monitoring: prometheus-applications
+    prometheus-shard: prometheus-00
+spec:
+  # namespaceSelector:
+  #   matchNames:
+  #   - dotnet-app
+  selector:
+    matchLabels:
+      app: dotnet-application
+  endpoints:
+  - port: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: go-application
+  # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
+  namespace: go-app
+  labels:
+    monitoring: prometheus-applications
+    prometheus-shard: prometheus-00
+spec:
+  # namespaceSelector:
+  #   matchNames:
+  #   - go-app
+  selector:
+    matchLabels:
+      app: go-application
+  endpoints:
+  - port: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nodejs-application
+  # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
+  namespace: nodejs-app
+  labels:
+    monitoring: prometheus-applications
+    prometheus-shard: prometheus-01
+spec:
+  # namespaceSelector:
+  #   matchNames:
+  #   - nodejs-app
+  selector:
+    matchLabels:
+      app: nodejs-application
+  endpoints:
+  - port: http
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: python-application
+  # Hier fehlte der Namespace also war der ServiceMonitor im default Namespace.
+  namespace: python-app
+  labels:
+    monitoring: prometheus-applications
+    prometheus-shard: prometheus-01
+spec:
+  # namespaceSelector:
+  #   matchNames:
+  #   - python-app
+  selector:
+    matchLabels:
+      app: python-application
+  endpoints:
+  - port: http
+---
+# --------------------------------------------------- NODE EXPORTER ----------------------------------------------------
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-exporter
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-applications
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-node-exporter
+  endpoints:
+  - port: http-metrics
+    path: /metrics
+---
+# --------------------------------------------------- KUBE STATE METRICS ----------------------------------------------------
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-applications
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kube-state-metrics
+  endpoints:
+  - port: http
+    path: /metrics

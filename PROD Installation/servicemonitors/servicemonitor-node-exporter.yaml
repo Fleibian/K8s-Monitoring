@@ -1,0 +1,19 @@
+
+# Müssen anscheinend nicht manuell konfiguriert werden, da der kube-prometheus-stack
+# bereits ServiceMonitors hierfür konfiguriert
+
+# --------------------------------------------------- NODE EXPORTER ----------------------------------------------------
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: node-exporter
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-applications
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus-node-exporter
+  endpoints:
+  - port: http-metrics
+    path: /metrics

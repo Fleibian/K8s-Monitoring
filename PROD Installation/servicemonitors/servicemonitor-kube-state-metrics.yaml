@@ -1,0 +1,19 @@
+
+# Müssen anscheinend nicht manuell konfiguriert werden, da der kube-prometheus-stack
+# bereits ServiceMonitors hierfür konfiguriert
+
+# --------------------------------------------------- KUBE STATE METRICS ----------------------------------------------------
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+  labels:
+    monitoring: prometheus-applications
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kube-state-metrics
+  endpoints:
+  - port: http
+    path: /metrics

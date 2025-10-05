@@ -1,0 +1,44 @@
+alertmanager:
+  enabled: true
+  fullnameOverride: "alertmanager"
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "alertmanager.prod.local"
+    paths:
+      - /
+    tls: []
+
+grafana:
+  enabled: true
+  fullnameOverride: "grafana"
+  nodeSelector:
+    kubernetes.io/os: linux
+  adminPassword: admin
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "grafana.prod.local"
+    paths:
+      - /
+    tls: []
+
+prometheus:
+  fullnameOverride: "prometheus"
+  serviceAccount:
+    create: true
+    name: "prometheus-k8s"
+  prometheusSpec:
+    nodeSelector:
+      kubernetes.io/os: linux
+    retention: "30d"
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "prometheus.prod.local"
+    paths:
+      - /
+    tls: []

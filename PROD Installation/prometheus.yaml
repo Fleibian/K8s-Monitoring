@@ -1,0 +1,33 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus-applications
+  namespace: monitoring
+spec:
+  evaluationInterval: 30s
+  image: quay.io/prometheus/prometheus:v3.4.1
+  imagePullPolicy: IfNotPresent
+  logFormat: logfmt
+  logLevel: info
+  nodeSelector:
+    kubernetes.io/os: linux
+  #podMonitorNamespaceSelector: {}
+  #podMonitorSelector:
+  #  matchLabels:
+  #    release: kube-prometheus-stack
+  replicas: 1
+  retention: 30d
+  scrapeInterval: 30s
+  serviceAccountName: prometheus-sa
+  serviceMonitorNamespaceSelector: {}
+  #   matchLabels:
+  #     kubernetes.io/metadata.name: default
+  serviceMonitorSelector:
+    matchExpressions:
+      - key: release
+        operator: In
+        values:
+          - kube-prometheus-stack
+          - prometheus-applications
+  shards: 1
+  version: v3.4.1

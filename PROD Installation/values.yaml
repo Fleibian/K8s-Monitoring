@@ -1,0 +1,73 @@
+nameOverride: ""
+
+alertmanager:
+  enabled: true
+  fullnameOverride: "alertmanager"
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "alertmanager.prod.local"
+    path: /
+    pathType: Prefix
+    tls: []  # configure TLS if you want
+
+grafana:
+  enabled: true
+  fullnameOverride: "grafana"
+  nodeSelector:
+    kubernetes.io/os: linux
+  adminPassword: admin  
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "grafana.prod.local"
+    paths:                # Grafana subchart expects 'paths'
+      - path: /
+        pathType: Prefix
+    tls: []  # optional
+
+prometheusOperator:
+  fullnameOverride: "prometheus-operator"
+  enabled: true
+  nodeSelector:
+    kubernetes.io/os: linux
+  admissionWebhooks:
+    certManager:
+      enabled: false 
+
+kube-state-metrics:
+  fullnameOverride: "kube-state-metrics"
+  nodeSelector:
+    kubernetes.io/os: linux
+
+kubelet:
+  serviceMonitor:
+    enabled: true
+    interval: "120s"
+
+prometheus:
+  fullnameOverride: "prometheus"
+  serviceAccount:
+    create: true
+    name: "prometheus-k8s"
+  prometheusSpec:
+    nodeSelector:
+      kubernetes.io/os: linux
+    retention: "30d"  
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+    hosts:
+      - "prometheus.prod.local"
+    path: /
+    pathType: Prefix
+    tls: []  # optional
+
+prometheus-node-exporter:
+  fullnameOverride: "node-exporter"
+  prometheus:
+    monitor:
+      enabled: true
+      interval: "120s"
