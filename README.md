@@ -6,6 +6,17 @@ Alle Dateien zur Einrichtung liegen unter:
 Alle Commands werden aus dem Ordner  
 `E:\K8s-Monitoring Installation` ausgeführt.
 
+In der Hostfile unter Windows müssen folgende Einträge gemacht werden
+```bash
+127.0.0.1 go.local
+127.0.0.1 dotnet.local
+127.0.0.1 python.local
+127.0.0.1 nodejs.local
+127.0.0.1 grafana.prod.local
+127.0.0.1 prometheus.prod.local
+127.0.0.1 portainer.prod.local
+```
+
 ---
 
 ## 1. Kind Cluster erstellen
@@ -54,7 +65,7 @@ helm install portainer portainer/portainer --namespace=portainer --set service.t
 
 ---
 
-## 5. Beispielapplikationen Images laden und ausführen
+## 6. Beispielapplikationen Images laden und ausführen
 
 ```bash
 docker compose -f prometheus/docker-compose.yaml build
@@ -85,7 +96,7 @@ kubectl apply -f prometheus/nodejs-application/deployment.yaml -n nodejs-app
 
 ---
 
-## 6. Ingress für Applikationen, Prometheus und Grafana erstellen
+## 7. Ingress für Applikationen, Prometheus und Grafana erstellen
 
 ```bash
 kubectl apply -f ingress/go-ingress.yaml
@@ -99,7 +110,7 @@ kubectl apply -f ingress/portainer-ingress.yaml
 
 ---
 
-## 7. ServiceAccount erstellen
+## 8. ServiceAccount erstellen
 
 ```bash
 kubectl apply -f serviceaccount.yaml
@@ -107,7 +118,7 @@ kubectl apply -f serviceaccount.yaml
 
 ---
 
-## 8. Prometheus Instanz im Namespace Monitoring erstellen
+## 9. Prometheus Instanz im Namespace Monitoring erstellen
 
 ```bash
 kubectl apply -f prometheus.yaml
@@ -115,7 +126,7 @@ kubectl apply -f prometheus.yaml
 
 ---
 
-## 9. ServiceMonitors erstellen
+## 10. ServiceMonitors erstellen
 
 ```bash
 kubectl apply -f servicemonitors/servicemonitor-apps.yaml
@@ -131,7 +142,7 @@ kubectl apply -f servicemonitors/servicemonitor-node-exporter.yaml
 
 ---
 
-## 10. Zugriff auf Applikationen per Port-Forwarding
+## 11. Zugriff auf Applikationen per Port-Forwarding
 
 ```bash
 kubectl port-forward -n traefik service/traefik 8080:80
@@ -139,7 +150,7 @@ kubectl port-forward -n traefik service/traefik 8080:80
 
 ---
 
-## 11. Überprüfung & Konfiguration in Prometheus / Grafana
+## 12. Überprüfung & Konfiguration in Prometheus / Grafana
 
 - In **Prometheus** unter **Status → Service Discovery** erscheinen die ServiceMonitors.  
 - Unter **Status → Target Health** prüfen, ob Scraping funktioniert.  
