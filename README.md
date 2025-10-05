@@ -44,6 +44,14 @@ kubectl create namespace monitoring
 helm install kube-prometheus-stack prometheus-community/kube-prometheus-stack --namespace monitoring --values values.yaml
 ```
 
+## 5. Portainer installieren
+```bash
+kubectl create namespace portainer
+helm repo add portainer https://portainer.github.io/k8s/
+helm repo update
+helm install portainer portainer/portainer --namespace=portainer --set service.type=ClusterIP
+```
+
 ---
 
 ## 5. Beispielapplikationen Images laden und ausführen
@@ -86,6 +94,7 @@ kubectl apply -f ingress/nodejs-ingress.yaml
 kubectl apply -f ingress/dotnet-ingress.yaml
 kubectl apply -f ingress/prometheus-ingress.yaml
 kubectl apply -f ingress/grafana-ingress.yaml
+kubectl apply -f ingress/portainer-ingress.yaml
 ```
 
 ---
