@@ -1,0 +1,22 @@
+# Create a new file: service-nodeport.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: exporter
+    app.kubernetes.io/name: kube-state-metrics
+  name: kube-state-metrics-nodeport
+  namespace: kube-system
+spec:
+  type: NodePort
+  ports:
+  - name: http-metrics
+    port: 8080
+    targetPort: http-metrics
+    nodePort: 30080
+  - name: telemetry
+    port: 8081
+    targetPort: telemetry
+    nodePort: 30081
+  selector:
+    app.kubernetes.io/name: kube-state-metrics

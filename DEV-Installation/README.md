@@ -99,3 +99,23 @@ kubectl apply -f ingress/dotnet-ingress.yaml
 ```
 
 ---
+
+## 8. ServiceMonitors für Applikationen erstellen
+
+---
+
+## 9. kube-state-metrics installieren
+
+service.yaml wird eventuell nicht benötigt. Je nachdem ob NodePort genutzt wird oder nicht.
+
+```bash
+kubectl apply -k kube-state-metrics
+```
+In dem Prod-Cluster einen ServiceMonitor und Endpoint erstellen, der auf kube-state-metrics des Dev-Clusters zeigt.
+
+```bash
+kubectl config use-context kind-prod
+kubectl apply -f servicemonitors/servicemonitor-dev-kube-state-metrics.yaml
+```
+
+---
