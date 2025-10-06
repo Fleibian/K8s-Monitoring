@@ -1,7 +1,7 @@
-# Kubernetes Cluster Einrichtung mit Kind, Traefik und Prometheus
+# Kubernetes Dev-Cluster Einrichtung mit Kind, Traefik und Prometheus
 
 Alle Dateien zur Einrichtung liegen unter:  
-`E:\K8s-Monitoring\PROD Installation`
+`E:\K8s-Monitoring\DEV-Installation`
 
 Alle Commands werden aus dem Ordner  
 `E:\K8s-Monitoring Installation\DEV-Installation` ausgeführt.
@@ -107,7 +107,7 @@ kubectl config use-context kind-dev
 kubectl apply -f services/services-applications-node-port.yaml
 
 kubectl config use-context kind-prod
-kubectl apply -f PROD Installation/servicemonitors/servicemonitor-dev-apps.yaml 
+kubectl apply -f PROD-Installation/servicemonitors/servicemonitor-dev-apps.yaml 
 ```
 
 ### Cross-Cluster Monitoring Architecture
