@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-application-nodeport
+  namespace: go-app
+spec:
+  type: NodePort
+  ports:
+  - name: metrics
+    port: 5000
+    targetPort: 5000
+    nodePort: 30085 # service-nodeport.yaml nutzt schon 30081
+  selector:
+    app: go-application
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-application-nodeport
+  namespace: python-app
+spec:
+  type: NodePort
+  ports:
+  - name: metrics
+    port: 5000
+    targetPort: 5000
+    nodePort: 30082
+  selector:
+    app: python-application
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-application-nodeport
+  namespace: nodejs-app
+spec:
+  type: NodePort
+  ports:
+  - name: metrics
+    port: 5000
+    targetPort: 5000
+    nodePort: 30083
+  selector:
+    app: nodejs-application
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-application-nodeport
+  namespace: dotnet-app
+spec:
+  type: NodePort
+  ports:
+  - name: metrics
+    port: 5000
+    targetPort: 5000
+    nodePort: 30084
+  selector:
+    app: dotnet-application

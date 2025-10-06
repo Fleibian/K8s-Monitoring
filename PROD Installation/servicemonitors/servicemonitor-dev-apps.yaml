@@ -1,0 +1,179 @@
+# Go Application ServiceMonitor
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-go-app-external
+  namespace: monitoring
+  labels:
+    app: dev-go-app
+spec:
+  clusterIP: None
+  ports:
+  - name: metrics
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: dev-go-app-external
+  namespace: monitoring
+subsets:
+- addresses:
+  - ip: "172.18.0.13"
+  ports:
+  - name: metrics
+    port: 30085
+    protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dev-go-app
+  namespace: monitoring
+  labels:
+    app: go-application
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+  selector:
+    matchLabels:
+      app: dev-go-app
+---
+# Python Application ServiceMonitor
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-python-app-external
+  namespace: monitoring
+  labels:
+    app: dev-python-app
+spec:
+  clusterIP: None
+  ports:
+  - name: metrics
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: dev-python-app-external
+  namespace: monitoring
+subsets:
+- addresses:
+  - ip: "172.18.0.13"
+  ports:
+  - name: metrics
+    port: 30082
+    protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dev-python-app
+  namespace: monitoring
+  labels:
+    app: python-application
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+  selector:
+    matchLabels:
+      app: dev-python-app
+---
+# Node.js Application ServiceMonitor
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-nodejs-app-external
+  namespace: monitoring
+  labels:
+    app: dev-nodejs-app
+spec:
+  clusterIP: None
+  ports:
+  - name: metrics
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: dev-nodejs-app-external
+  namespace: monitoring
+subsets:
+- addresses:
+  - ip: "172.18.0.13"
+  ports:
+  - name: metrics
+    port: 30083
+    protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dev-nodejs-app
+  namespace: monitoring
+  labels:
+    app: nodejs-application
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+  selector:
+    matchLabels:
+      app: dev-nodejs-app
+---
+# .NET Application ServiceMonitor
+apiVersion: v1
+kind: Service
+metadata:
+  name: dev-dotnet-app-external
+  namespace: monitoring
+  labels:
+    app: dev-dotnet-app
+spec:
+  clusterIP: None
+  ports:
+  - name: metrics
+    port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: dev-dotnet-app-external
+  namespace: monitoring
+subsets:
+- addresses:
+  - ip: "172.18.0.13"
+  ports:
+  - name: metrics
+    port: 30084
+    protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: dev-dotnet-app
+  namespace: monitoring
+  labels:
+    app: dotnet-application
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+  - port: metrics
+    interval: 30s
+    path: /metrics
+  selector:
+    matchLabels:
+      app: dev-dotnet-app
