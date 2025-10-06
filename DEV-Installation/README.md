@@ -100,7 +100,37 @@ kubectl apply -f ingress/dotnet-ingress.yaml
 
 ---
 
-## 8. ServiceMonitors für Applikationen erstellen
+## 8. ServiceMonitors und Endpoints für Applikationen erstellen
+
+```bash
+kubectl config use-context kind-dev
+kubectl apply -f services/services-applications-node-port.yaml
+
+kubectl config use-context kind-prod
+kubectl apply -f PROD Installation/servicemonitors/servicemonitor-dev-apps.yaml 
+```
+
+### Cross-Cluster Monitoring Architecture
+
+#### Dev Cluster (Source)
+1. **Application** – Running on port **5000**  
+2. **NodePort Service** – Exposes app externally via port **30085**
+
+#### Prod Cluster (Monitoring)
+3. **Headless Service** – Defines the external service name  
+4. **Static Endpoints** – Points to dev cluster `IP:30085`  
+5. **ServiceMonitor** – Tells Prometheus to scrape the service
+
+### The Complete Flow
+```
+Prometheus (prod) → ServiceMonitor → Service → Endpoints → Dev Cluster NodePort → Application (dev)
+```
+### Why Each Component is Needed
+
+- **NodePort Service (dev):** Makes internal app accessible from outside the cluster  
+- **Headless Service (prod):** Provides a Kubernetes service abstraction for external targets  
+- **Static Endpoints (prod):** Bridges Kubernetes service discovery to external IPs  
+- **ServiceMonitor (prod):** Configures Prometheus Operator to scrape the service
 
 ---
 
